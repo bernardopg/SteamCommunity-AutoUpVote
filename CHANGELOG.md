@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-07-08
+
+### Added
+- Added safer active-state detection using Steam active classes and `aria-pressed`
+- Added per-batch click limits, mutation debouncing, and post-click state checks
+- Added feed container fallbacks for Steam activity page variations
+- Expanded README with installation, supported URLs, privacy notes, and troubleshooting
+
+### Changed
+- Scoped upvote button scans to the detected activity feed container
+- Moved local temporary CDP test scripts under ignored `tmp/`
+- Expanded `.gitignore` for local test, cache, and browser debug artifacts
+
 ## [1.1.1] - 2026-07-08
 
 ### Fixed

@@ -28,6 +28,14 @@ yarn-error.log*
 
 # Testing
 coverage/
+.coverage
+.nyc_output/
+htmlcov/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+__pycache__/
+*.py[cod]
 
 # Build output
 dist/
@@ -50,6 +58,14 @@ build/
 # Temporary files
 tmp/
 temp/
+tmp_*
+*.tmp
 
 # Local analysis/cache files
 .tokensave/
+
+# Local browser/debug artifacts
+*.har
+*.trace
+playwright-report/
+test-results/
