@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SteamCommunity Auto UpVote
 // @namespace    https://github.com/bernardopg/SteamCommunity-AutoUpVote
-// @version      1.1.0
+// @version      1.1.1
 // @description  Automatically upvote all posts on your Steam Community Activity Feed
 // @author       bernardopg
 // @license      MIT
@@ -10,10 +10,18 @@
 // @supportURL   https://github.com/bernardopg/SteamCommunity-AutoUpVote/issues
 // @updateURL    https://raw.githubusercontent.com/bernardopg/SteamCommunity-AutoUpVote/main/SteamCommunity-AutoUpVote.user.js
 // @downloadURL  https://raw.githubusercontent.com/bernardopg/SteamCommunity-AutoUpVote/main/SteamCommunity-AutoUpVote.user.js
+// @match        https://steamcommunity.com/id/*/home
 // @match        https://steamcommunity.com/id/*/home/*
+// @match        https://steamcommunity.com/id/*/myactivity
 // @match        https://steamcommunity.com/id/*/myactivity/*
+// @match        https://steamcommunity.com/profiles/*/home
 // @match        https://steamcommunity.com/profiles/*/home/*
+// @match        https://steamcommunity.com/profiles/*/myactivity
 // @match        https://steamcommunity.com/profiles/*/myactivity/*
+// @match        https://steamcommunity.com/my/home
+// @match        https://steamcommunity.com/my/home/*
+// @match        https://steamcommunity.com/my/myactivity
+// @match        https://steamcommunity.com/my/myactivity/*
 // @grant        none
 // @run-at       document-idle
 // @compatible   chrome Tampermonkey
@@ -44,10 +52,13 @@
     // Configuration
     const CONFIG = {
         // Selectors for upvote buttons (covers old and new Steam UI)
-        buttonSelector: 'a.btn_grey_grey[id^="vote_up_"], a.btn_grey_grey[id^="VoteUpBtn_"]',
+        buttonSelector: 'a[id^="vote_up_"], a[id^="VoteUpBtn_"], button[id^="vote_up_"], button[id^="VoteUpBtn_"], [role="button"][id^="vote_up_"], [role="button"][id^="VoteUpBtn_"]',
 
         // Class used by Steam for active/already clicked state
         activeClass: 'active',
+
+        // Dataset flag used to avoid toggling the same button twice
+        processedFlag: 'autoUpvoteProcessed',
 
         // Delay between clicks (ms) to mimic human behavior
         clickDelay: 150,
@@ -81,13 +92,12 @@
 
         buttons.forEach((btn) => {
             // Only click if not already active and not being processed
-            if (!btn.classList.contains(CONFIG.activeClass) && btn.dataset.processing !== 'true') {
-                btn.dataset.processing = 'true';
+            if (!btn.classList.contains(CONFIG.activeClass) && btn.dataset[CONFIG.processedFlag] !== 'true') {
+                btn.dataset[CONFIG.processedFlag] = 'true';
 
                 // Staggered delay to prevent rate limiting
                 setTimeout(() => {
                     btn.click();
-                    delete btn.dataset.processing;
                 }, clickCount * CONFIG.clickDelay);
 
                 clickCount++;

@@ -36,7 +36,7 @@ You need a userscript manager installed in your browser:
 
 The script is also available on GreasyFork:
 
-**[Install from GreasyFork](https://greasyfork.org/en/scripts/XXXXX-steamcommunity-autoupvote)**
+**[Install from GreasyFork](https://greasyfork.org/scripts/586154-steamcommunity-auto-upvote)**
 
 ## Usage
 
